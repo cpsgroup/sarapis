@@ -1,0 +1,31 @@
+{
+  "name": "sarapis",
+  "version": "0.1.0",
+  "description": "a RESTful, proxied, read-only Solr interface",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "solr",
+    "rest",
+    "proxy"
+  ],
+  "author": "Manuel Weidmann",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.3.5",
+    "hapi": "^8.5.1",
+    "hapi-bunyan": "^0.6.0",
+    "hapi-swaggered": "^2.2.0",
+    "hapi-swaggered-ui": "^1.3.1",
+    "joi": "^6.4.2",
+    "require": "^2.4.18",
+    "solr-client": "^0.5.0",
+    "solr-proxy": "^1.2.0",
+    "yargs": "^3.9.1"
+  },
+  "devDependencies": {
+    "jasmine": "^2.3.1"
+  }
+}
