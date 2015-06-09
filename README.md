@@ -14,3 +14,7 @@ bootprint swagger http://localhost:3000/swagger/swagger static
 http://sarapis.herokuapp.com/docs
 
 Generated with https://www.npmjs.com/package/hapi-swaggered
+
+#####Docker image
+An io.js-based image is built automatically, available here:
+https://registry.hub.docker.com/u/cpsgroup/sarapis/
