@@ -11,7 +11,7 @@ var log = bunyan.createLogger({
 });
 
 var argv = require('yargs')
-    .usage('Usage: $0 --proxy-port [num] --solr-host [string] --solr-port [num] --solr-core [string]')
+    .usage('Usage: $0 --solr-host [string] --solr-port [num]')
     .demand(['solr-host', 'solr-port'])
     .describe('solr-host', 'Specify the host address of the Solr instance to connect to.')
     .describe('solr-port', 'Specify the port of the Solr instance to connect to.')
@@ -20,6 +20,7 @@ var argv = require('yargs')
     .describe('solr-deny', 'Specify the parameters to be prohibited on the Solr instance..')
     .describe('proxy-port', 'Specify the port of the Solr proxy.')
     .describe('proxy-path', 'Specify the valid paths of the Solr proxy.')
+    .describe('sarapis-port', 'Specify the port of this Sarapis server instance.')
     .version(function () {
         return require('./package.json').version;
     })
@@ -27,15 +28,16 @@ var argv = require('yargs')
     .argv;
 log.info(argv);
 
-var SOLR_HOST = argv.solrHost;
-var SOLR_PORT = argv.solrPort;
+var SOLR_HOST = argv.solrHost || 'localhost';
+var SOLR_PORT = argv.solrPort || 8983;
 var SOLR_CORE = argv.solrCore;
 var SOLR_VALID_METHODS = argv.solrAllow || ['GET', 'HEAD'];
-var SOLR_INVALID_PARAMS = argv.solrDeny;
+var SOLR_INVALID_PARAMS = argv.solrDeny || ['qt', 'stream'];
 var PROXY_HOST = argv.proxyHost;
-var PROXY_PORT = argv.proxyPort;
+var PROXY_PORT = argv.proxyPort || 9090;
 //var PROXY_PATH = argv.proxyPath != undefined ? argv.proxyPath.split(',') : [];
-var PROXY_PATH = argv.proxyPath || ['/solr/select']
+var PROXY_PATH = argv.proxyPath || ['/solr/select'];
+var SARAPIS_PORT = argv.sarapisPort || 3000;
 
 if (SOLR_CORE != undefined) {
     PROXY_PATH.push('/solr/' + SOLR_CORE + '/select')
@@ -58,40 +60,37 @@ log.info();
 //we may even expose it to the outside world
 var solrProxy = require('solr-proxy');
 var solrProxyOptions = {
-    listenPort: PROXY_PORT || 9090,
+    listenPort: PROXY_PORT,
     validHttpMethods: SOLR_VALID_METHODS,
-    validPaths: PROXY_PATH || ['/solr/select'],
-    invalidParams: SOLR_INVALID_PARAMS || ['qt', 'stream'],
+    validPaths: PROXY_PATH,
+    invalidParams: SOLR_INVALID_PARAMS,
     backend: {
-        host: SOLR_HOST || 'localhost',
-        port: SOLR_PORT || 8080
+        host: SOLR_HOST,
+        port: SOLR_PORT
     }
 };
 solrProxy.start(9090, solrProxyOptions);
 
 var solrClient = require('solr-client');
-var directClient = solrClient.createClient(SOLR_HOST, SOLR_PORT, SOLR_CORE);
-
-//directClient.search('q=*.*', function (err, obj) {
-//    console.log(obj.response);
-//    console.log('something');
-//});
 var proxyClient = solrClient.createClient(PROXY_HOST, PROXY_PORT, SOLR_CORE);
-
-//proxyClient.search('q=*.*', function (err, obj) {
-//    console.log(obj.response);
-//    console.log('something');
-//});
 
 
 var restServer = new hapi.Server();
-restServer.connection({port: 3000, labels: ['api']});
+restServer.connection({port: SARAPIS_PORT, labels: ['api']});
 
 restServer.route({
     path: '/',
     method: 'GET',
     handler: function (request, reply) {
-        reply.redirect('/docs')
+        reply.redirect('/static')
+    }
+});
+
+restServer.route({
+    method: 'GET',
+    path: '/static/{path*}',
+    handler: {
+        directory: {path: './static', listing: false, index: true}
     }
 });
 
@@ -194,7 +193,10 @@ restServer.route({
                 matchFilter: Joi.string().description('Restrict results to matching field values, e.g. author, tolkien'),
                 restrict: Joi.string().description('Restrict results to specified fields, e.g. id,size,weight'),
                 groupBy: Joi.string().description('Group results with the specified field, e.g. publisher'),
-                group: Joi.object().keys({ on: Joi.boolean(), field: Joi.string()}).description('Group results according to the given options object, e.g. {on=true,field="publisher"}'),
+                group: Joi.object().keys({
+                    on: Joi.boolean(),
+                    field: Joi.string()
+                }).description('Group results according to the given options object, e.g. {on=true,field="publisher"}'),
                 facet: Joi.object().description('Create a facet according to the given options object, e.g. {on=true,query="author"}'),
                 timeout: Joi.number().integer().min(0).max(10000).description('Limit response time in milliseconds and get preliminary results, e.g. 10')
             }
@@ -236,6 +238,7 @@ restServer.route({
 
             proxyClient.search(query, function (err, obj) {
                 if (err) {
+                    restServer.log('error', err);
                     reply({"numFound": 0, "page": 0, "maxScore": 0, "docs": []});
                 } else {
                     reply(obj.response);
@@ -250,10 +253,10 @@ restServer.register({
     register: require('hapi-bunyan'),
     options: {
         logger: bunyan.createLogger({
-            name: 'saparis-rest', level: 'debug', streams: [{
+            name: 'sarapis-rest', level: 'debug', streams: [{
                 stream: process.stdout, level: 'debug'
-            }, {path: './saparis-rest.log', level: 'debug'}]
-        }),
+            }, {path: './sarapis-rest.log', level: 'debug'}]
+        })
     }
 }, function (err) {
     if (err) {
@@ -272,7 +275,7 @@ restServer.register({
         info: {
             title: 'Sarapis API',
             description: 'A proxied Solr REST API to enable easy read-only access to any Solr instance.',
-            version: '1.0'
+            version: '0.1.0'
         }
     }
 }, {
@@ -284,14 +287,14 @@ restServer.register({
     if (err) {
         throw err
     }
-})
+});
 
 restServer.register({
     register: hapiSwaggeredUi,
     options: {
         title: 'Sarapis API',
         authorization: {
-            field: 'apiKey',
+            //field: 'apiKey',
             scope: 'query' // header works as well
             // valuePrefix: 'bearer '// prefix incase
         }

@@ -12,8 +12,10 @@
     "proxy"
   ],
   "author": "Manuel Weidmann",
+  "repository" : "https://github.com/cpsgroup/sarapis.git",
   "license": "MIT",
   "dependencies": {
+    "boom": "^2.7.2",
     "bunyan": "^1.3.5",
     "hapi": "^8.5.1",
     "hapi-bunyan": "^0.6.0",
