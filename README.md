@@ -1,4 +1,4 @@
-# sarapis [![Build Status](https://api.shippable.com/projects/5576aac7edd7f2c0520dec32/badge?branchName=master&no=1433840337068)](https://api.shippable.com/projects/5576aac7edd7f2c0520dec32)
+# sarapis [![Build Status](https://api.shippable.com/projects/5576aac7edd7f2c0520dec32/badge?branchName=master)](https://app.shippable.com/projects/5576aac7edd7f2c0520dec32/builds/latest)
 A RESTful, proxied, read-only Solr interface
 
 ---------------------------
