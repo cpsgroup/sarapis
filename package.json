@@ -1,6 +1,6 @@
 {
   "name": "sarapis",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a RESTful, proxied, read-only Solr interface",
   "main": "index.js",
   "scripts": {
