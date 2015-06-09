@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="main.css">
+    <meta charset="UTF-8">
+    <title>Sarapis API</title>
+</head>
+<body>
+<div class="container">
+    <h1>Sarapis API</h1>
+<p>A proxied Solr REST API to enable easy read-only access to any Solr instance.</p>
+
+<h2>Summary</h2>
+<table class="table table-bordered table-condensed swagger--summary">
+    <thead>
+    <tr>
+        <th>Path</th>
+        <th>Method</th>
+        <th>Description</th>
+    </tr>
+    </thead>
+    <tbody>
+            <tr>
+                    <td class="swagger--summary-path" rowspan="1">
+                        <a href="#method-/admin">/admin</a>
+                    </td>
+                <td>
+                    <a href="#method-/admin-get">GET</a>
+                </td>
+                <td>
+                    Administration Overview
+                </td>
+            </tr>
+            <tr>
+                    <td class="swagger--summary-path" rowspan="1">
+                        <a href="#method-/admin/{log}">/admin/{log}</a>
+                    </td>
+                <td>
+                    <a href="#method-/admin/{log}-get">GET</a>
+                </td>
+                <td>
+                    Inspect Logs
+                </td>
+            </tr>
+            <tr>
+                    <td class="swagger--summary-path" rowspan="1">
+                        <a href="#method-/admin/{log}/{field}">/admin/{log}/{field}</a>
+                    </td>
+                <td>
+                    <a href="#method-/admin/{log}/{field}-get">GET</a>
+                </td>
+                <td>
+                    Get Log Settings
+                </td>
+            </tr>
+            <tr>
+                    <td class="swagger--summary-path" rowspan="1">
+                        <a href="#method-/admin/{log}/{field}/{value}">/admin/{log}/{field}/{value}</a>
+                    </td>
+                <td>
+                    <a href="#method-/admin/{log}/{field}/{value}-post">POST</a>
+                </td>
+                <td>
+                    Set Log Settings
+                </td>
+            </tr>
+            <tr>
+                    <td class="swagger--summary-path" rowspan="1">
+                        <a href="#method-/solr/{query}">/solr/{query}</a>
+                    </td>
+                <td>
+                    <a href="#method-/solr/{query}-get">GET</a>
+                </td>
+                <td>
+                    Solr Search
+                </td>
+            </tr>
+    </tbody>
+</table>
+
+
+
+<h2>Paths</h2>
+
+    
+<span id="method-/admin"></span>
+    <div class="swagger--panel-method-get panel">
+    <div class="panel-heading">
+        <div class="method-summary">Administration Overview</div>
+        <h3 id="method-/admin-get" class="panel-title"><span class="method-name">GET</span> <strong>/admin</strong></h3>
+    </div>
+    <div class="panel-body">
+        <section class="sw-method-description">
+            Complete list of administrative commands.
+        </section>
+        
+        
+    <section class="sw-request-params">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>query
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>Solr search query</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+        
+    <section class="sw-response-body">
+        <p><span class="label label-default">application/json</span> </p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-response-code"></th>
+                <th class="sw-response-description"></th>
+                <th class="sw-response-data-type hidden-xs hidden-sm"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+            </div>
+</div>    
+<span id="method-/admin/{log}"></span>
+    <div class="swagger--panel-method-get panel">
+    <div class="panel-heading">
+        <div class="method-summary">Inspect Logs</div>
+        <h3 id="method-/admin/{log}-get" class="panel-title"><span class="method-name">GET</span> <strong>/admin/{log}</strong></h3>
+    </div>
+    <div class="panel-body">
+        <section class="sw-method-description">
+            Get and set Sarapis server configuration.
+        </section>
+        
+        
+    <section class="sw-request-params">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>log
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>The log on which to operate, i.e. cli, rest or proxy.</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>append
+</td>
+                    <td>Whether to only append new log entries; default is true, will serve log entries from log files otherwise.</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        boolean
+</span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+        
+    <section class="sw-response-body">
+        <p><span class="label label-default">application/json</span> </p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-response-code"></th>
+                <th class="sw-response-description"></th>
+                <th class="sw-response-data-type hidden-xs hidden-sm"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+            </div>
+</div>    
+<span id="method-/admin/{log}/{field}"></span>
+    <div class="swagger--panel-method-get panel">
+    <div class="panel-heading">
+        <div class="method-summary">Get Log Settings</div>
+        <h3 id="method-/admin/{log}/{field}-get" class="panel-title"><span class="method-name">GET</span> <strong>/admin/{log}/{field}</strong></h3>
+    </div>
+    <div class="panel-body">
+        <section class="sw-method-description">
+            Get and set Sarapis server configuration.
+        </section>
+        
+        
+    <section class="sw-request-params">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>log
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>The log on which to operate, i.e. cli, rest or proxy.</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>field
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>The field of information to retrieve, i.e. level, location.</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+        
+    <section class="sw-response-body">
+        <p><span class="label label-default">application/json</span> </p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-response-code"></th>
+                <th class="sw-response-description"></th>
+                <th class="sw-response-data-type hidden-xs hidden-sm"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+            </div>
+</div>    
+<span id="method-/admin/{log}/{field}/{value}"></span>
+    <div class="swagger--panel-method-post panel">
+    <div class="panel-heading">
+        <div class="method-summary">Set Log Settings</div>
+        <h3 id="method-/admin/{log}/{field}/{value}-post" class="panel-title"><span class="method-name">POST</span> <strong>/admin/{log}/{field}/{value}</strong></h3>
+    </div>
+    <div class="panel-body">
+        <section class="sw-method-description">
+            Get and set Sarapis server configuration.
+        </section>
+        
+        
+    <section class="sw-request-params">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>log
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>The log on which to operate, i.e. cli, rest or proxy.</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>field
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>The field of information to retrieve, i.e. level, location.</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+        
+    <section class="sw-response-body">
+        <p><span class="label label-default">application/json</span> </p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-response-code"></th>
+                <th class="sw-response-description"></th>
+                <th class="sw-response-data-type hidden-xs hidden-sm"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+            </div>
+</div>    
+<span id="method-/solr/{query}"></span>
+    <div class="swagger--panel-method-get panel">
+    <div class="panel-heading">
+        <div class="method-summary">Solr Search</div>
+        <h3 id="method-/solr/{query}-get" class="panel-title"><span class="method-name">GET</span> <strong>/solr/{query}</strong></h3>
+    </div>
+    <div class="panel-body">
+        <section class="sw-method-description">
+            Extended DisMax Syntax applies, refer to <a href="https://cwiki.apache.org/confluence/display/solr/The+Extended+DisMax+Query+Parser">https://cwiki.apache.org/confluence/display/solr/The+Extended+DisMax+Query+Parser</a> for additional information.
+        </section>
+        
+        
+    <section class="sw-request-params">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-param-name"></th>
+                <th class="sw-param-description"></th>
+                <th class="sw-param-type"></th>
+                <th class="sw-param-data-type"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>query
+                            <span class="json-property-required"></span>
+                        </td>
+                    <td>Solr search query</td>
+                    <td>path</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>page
+</td>
+                    <td>Pagination offset, e.g. 5</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        integer
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>rows
+</td>
+                    <td>Number of results per page, e.g. 100</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        integer
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>sort
+</td>
+                    <td>Sort function, e.g. id desc, price asc</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>rangeFilter
+</td>
+                    <td>Restrict results to field values in range, e.g. price,5,30</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>matchFilter
+</td>
+                    <td>Restrict results to matching field values, e.g. author, tolkien</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>restrict
+</td>
+                    <td>Restrict results to specified fields, e.g. id,size,weight</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>groupBy
+</td>
+                    <td>Group results with the specified field, e.g. publisher</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        string
+</span>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>timeout
+</td>
+                    <td>Limit response time in milliseconds and get preliminary results, e.g. 10</td>
+                    <td>query</td>
+                    <td>
+                        <span class="json-property-type">
+        integer
+</span>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+        
+    <section class="sw-response-body">
+        <p><span class="label label-default">application/json</span> </p>
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="sw-response-code"></th>
+                <th class="sw-response-description"></th>
+                <th class="sw-response-data-type hidden-xs hidden-sm"></th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>default</td>
+                    <td>
+                        <div class="sw-response-description-text">
+                            
+                        </div>
+                        <section class="visible-xs visible-sm">
+                            
+                        </section>
+                    </td>
+                    <td class="hidden-xs hidden-sm">
+</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+            </div>
+</div>
+
+<h2>Definitions</h2>
+
+    
+    <div class="panel panel-definition">
+        <div class="panel-heading">
+                <h3 class="panel-title"><a name="/definitions/OnFieldModel"></a>OnFieldModel:
+                    <span class="json-property-type"><span class="json-property-type">
+        object
+</span>
+
+</span>
+                </h3>
+        </div>
+    <div class="panel-body">
+            <section class="json-schema-properties">
+    <dl>
+            <dt>
+                <span class="json-property-name">on:</span>
+                <span class="json-property-type">
+        boolean
+</span>
+
+            </dt>
+            <dd>
+                
+                <div class="json-inner-schema">
+                    
+                </div>
+            </dd>
+            <dt>
+                <span class="json-property-name">field:</span>
+                <span class="json-property-type">
+        string
+</span>
+
+            </dt>
+            <dd>
+                
+                <div class="json-inner-schema">
+                    
+                </div>
+            </dd>
+    </dl>
+</section>
+
+    </div>
+</div>    
+    <div class="panel panel-definition">
+        <div class="panel-heading">
+                <h3 class="panel-title"><a name="/definitions/EmptyModel"></a>EmptyModel:
+                    <span class="json-property-type"><span class="json-property-type">
+        object
+</span>
+
+</span>
+                </h3>
+        </div>
+    <div class="panel-body">
+            <section class="json-schema-properties">
+    <dl>
+    </dl>
+</section>
+
+    </div>
+</div></div>
+</body>
+</html>
