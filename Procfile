@@ -1,0 +1,1 @@
+web: node sarapis.js --solr-host ec2-52-28-109-168.eu-central-1.compute.amazonaws.com --solr-port 8983 --solr-core=gettingstarted_shard1_replica2 --sarapis-port $PORT
