@@ -13,18 +13,18 @@ var log = bunyan.createLogger({
 var argv = require('yargs')
     .usage('Usage: $0 --solr-host [string] --solr-port [num]')
     .demand(['solr-host', 'solr-port'])
-    .describe('solr-host', 'Specify the host address of the Solr instance to connect to.')
-    .describe('solr-port', 'Specify the port of the Solr instance to connect to.')
-    .describe('solr-core', 'Specify the core of the Solr instance to connect to.')
-    .describe('solr-allow', 'Specify the methods to be allowed on the Solr instance.')
-    .describe('solr-deny', 'Specify the parameters to be prohibited on the Solr instance..')
-    .describe('proxy-port', 'Specify the port of the Solr proxy.')
-    .describe('proxy-path', 'Specify the valid paths of the Solr proxy.')
-    .describe('sarapis-port', 'Specify the port of this Sarapis server instance.')
+    .describe('solr-host', 'The host address of a Solr instance to connect to.')
+    .describe('solr-port', 'The port of a Solr instance to connect to.')
+    .describe('solr-core', 'A core of a Solr instance to connect to.')
+    .describe('solr-allow', 'The methods to be allowed on the Solr instance(s).')
+    .describe('solr-deny', 'The parameters to be prohibited on the Solr instance(s).')
+    .describe('proxy-port', 'The port of the Solr proxy.')
+    .describe('proxy-path', 'The valid paths for the Solr proxy.')
+    .describe('sarapis-port', 'The port of this Sarapis server instance.')
     .version(function () {
         return require('./package.json').version;
     })
-    .epilog('Copyright 2015')
+    .epilog('Copyright 2015 CPS Group\nhttp://cpsgroup.github.io/')
     .argv;
 log.info(argv);
 
@@ -35,7 +35,6 @@ var SOLR_VALID_METHODS = argv.solrAllow || ['GET', 'HEAD'];
 var SOLR_INVALID_PARAMS = argv.solrDeny || ['qt', 'stream'];
 var PROXY_HOST = argv.proxyHost;
 var PROXY_PORT = argv.proxyPort || 9090;
-//var PROXY_PATH = argv.proxyPath != undefined ? argv.proxyPath.split(',') : [];
 var PROXY_PATH = argv.proxyPath || ['/solr/select'];
 var SARAPIS_PORT = argv.sarapisPort || 3000;
 
@@ -43,18 +42,6 @@ if (SOLR_CORE != undefined) {
     PROXY_PATH.push('/solr/' + SOLR_CORE + '/select')
 }
 log.info();
-
-
-//var args = [];
-//var DEBUG = process.env.DEBUG != undefined ? process.env.DEBUG.indexOf('solr-proxy') > 1 ? true : false : false;
-//var PROXY_PORT = process.env.PROXY_PORT != undefined ? parseInt(process.env.PROXY_PORT) : 9090;
-//var SOLR_HOST = process.env.SOLR_HOST != undefined ? process.env.SOLR_HOST : 'localhost';
-//var SOLR_PORT = process.env.SOLR_PORT != undefined ? parseInt(process.env.SOLR_PORT) : 8080;
-//var SOLR_VALID_METHODS = process.env.SOLR_VALID_METHODS != undefined ? process.env.SOLR_VALID_METHODS.split(',') : [];
-//var SOLR_VALID_PATHS = process.env.SOLR_VALID_PATHS != undefined ? process.env.SOLR_VALID_PATHS.split(',') : [];
-//var SOLR_INVALID_PARAMS = process.env.SOLR_INVALID_PARAMS != undefined ? process.env.SOLR_INVALID_PARAMS.split(',') : [];
-//args.push(DEBUG, SOLR_HOST, SOLR_PORT, SOLR_VALID_METHODS, SOLR_VALID_PATHS, SOLR_INVALID_PARAMS);
-//console.log(args);
 
 //startup our proxy that we make our calls against
 //we may even expose it to the outside world
