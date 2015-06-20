@@ -1,0 +1,232 @@
+{
+  "swagger": "2.0",
+  "paths": {
+    "/admin": {
+      "get": {
+        "responses": {
+          "default": {}
+        },
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "description": "Solr search query",
+            "type": "string",
+            "name": "query",
+            "in": "path"
+          }
+        ],
+        "summary": "Administration Overview",
+        "description": "Complete list of administrative commands."
+      }
+    },
+    "/admin/{log}": {
+      "get": {
+        "responses": {
+          "default": {}
+        },
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "description": "The log on which to operate, i.e. cli, rest or proxy.",
+            "type": "string",
+            "name": "log",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "description": "Whether to only append new log entries; default is true, will serve log entries from log files otherwise.",
+            "type": "boolean",
+            "name": "append",
+            "in": "query"
+          }
+        ],
+        "summary": "Inspect Logs",
+        "description": "Get and set Sarapis server configuration."
+      }
+    },
+    "/admin/{log}/{field}": {
+      "get": {
+        "responses": {
+          "default": {}
+        },
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "description": "The log on which to operate, i.e. cli, rest or proxy.",
+            "type": "string",
+            "name": "log",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "description": "The field of information to retrieve, i.e. level, location.",
+            "type": "string",
+            "name": "field",
+            "in": "path"
+          }
+        ],
+        "summary": "Get Log Settings",
+        "description": "Get and set Sarapis server configuration."
+      }
+    },
+    "/admin/{log}/{field}/{value}": {
+      "post": {
+        "responses": {
+          "default": {}
+        },
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "admin"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "description": "The log on which to operate, i.e. cli, rest or proxy.",
+            "type": "string",
+            "name": "log",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "description": "The field of information to retrieve, i.e. level, location.",
+            "type": "string",
+            "name": "field",
+            "in": "path"
+          }
+        ],
+        "summary": "Set Log Settings",
+        "description": "Get and set Sarapis server configuration."
+      }
+    },
+    "/solr/{query}": {
+      "get": {
+        "responses": {
+          "default": {}
+        },
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "solr"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "description": "Solr search query",
+            "type": "string",
+            "name": "query",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "description": "Pagination offset, e.g. 5",
+            "minimum": 0,
+            "type": "integer",
+            "name": "page",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Number of results per page, e.g. 100",
+            "minimum": 0,
+            "type": "integer",
+            "name": "rows",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Sort function, e.g. id desc, price asc",
+            "type": "string",
+            "name": "sort",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Restrict results to field values in range, e.g. price,5,30",
+            "type": "string",
+            "name": "rangeFilter",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Restrict results to matching field values, e.g. author, tolkien",
+            "type": "string",
+            "name": "matchFilter",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Restrict results to specified fields, e.g. id,size,weight",
+            "type": "string",
+            "name": "restrict",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Group results with the specified field, e.g. publisher",
+            "type": "string",
+            "name": "groupBy",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "description": "Limit response time in milliseconds and get preliminary results, e.g. 10",
+            "minimum": 0,
+            "maximum": 10000,
+            "type": "integer",
+            "name": "timeout",
+            "in": "query"
+          }
+        ],
+        "summary": "Solr Search",
+        "description": "Extended DisMax Syntax applies, refer to https://cwiki.apache.org/confluence/display/solr/The+Extended+DisMax+Query+Parser for additional information."
+      }
+    }
+  },
+  "definitions": {
+    "OnFieldModel": {
+      "properties": {
+        "on": {
+          "type": "boolean"
+        },
+        "field": {
+          "type": "string"
+        }
+      }
+    },
+    "EmptyModel": {
+      "properties": {}
+    }
+  },
+  "tags": [
+    {
+      "name": "/",
+      "description": "Sarapis"
+    }
+  ],
+  "info": {
+    "title": "Sarapis API",
+    "description": "A proxied Solr REST API to enable easy read-only access to any Solr instance.",
+    "version": "0.1.0"
+  }
+}
