@@ -11,7 +11,7 @@ module.exports.core =
 		info: {
 			title: 'Sarapis API',
 			description: 'A proxied Solr REST API to enable easy read-only access to any Solr instance.',
-			version: '0.1.0'
+			version: '0.2.0'
 		}
 	},
 	route: {
